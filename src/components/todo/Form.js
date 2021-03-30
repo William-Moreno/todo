@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 function TodoForm({ handleSubmit }) {
 
@@ -20,26 +22,26 @@ function TodoForm({ handleSubmit }) {
 
     return (
       <>
-        <h3>Add Item</h3>
-        <form onSubmit={handleFormSubmit}>
-          <label>
+        <Form onSubmit={handleFormSubmit} style={{ border: '1px solid #787878', width: '28vw', maxwidth: '400px', padding: '12px' }}>
+        <h5>Add To Do Item</h5>
+          <Form.Label>
             <span>To Do Item</span>
-            <input
+            <Form.Control
               name="text"
-              placeholder="Add To Do List Item"
+              placeholder="Item Details"
               onChange={handleInputChange}
             />
-          </label>
-          <label>
+          </Form.Label>
+          <Form.Label>
             <span>Difficulty Rating</span>
-            <input defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={handleInputChange} />
-          </label>
-          <label>
+            <Form.Control defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={handleInputChange} />
+          </Form.Label>
+          <Form.Label>
             <span>Assigned To</span>
-            <input type="text" name="assignee" placeholder="Assigned To" onChange={handleInputChange} />
-          </label>
-          <button>Add Item</button>
-        </form>
+            <Form.Control type="text" name="assignee" placeholder="Assignee Name" onChange={handleInputChange} />
+          </Form.Label>
+          <Button style={{ width: '10vw', padding: '3px' }}>Add Item</Button>
+        </Form>
       </>
     );
 

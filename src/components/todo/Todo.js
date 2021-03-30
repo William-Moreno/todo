@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import Card from 'react-bootstrap/Card';
+
 import TodoForm from './Form.js';
 import TodoList from './List.js';
 
@@ -44,14 +46,18 @@ function ToDo() {
 
 
     return (
-      <>
-        <header>
-          <h2>
+      <div>
+      <header>
+        <h5 style={{ height: '6vh', padding: '1.5vh', background: '#0292FD', color: 'white' }}>Home</h5>
+      </header>
+      <Card style={{ width: '90vw', height: '80vh', boxshadow: '4px 4px 7px #222', margin: 'auto' }}>
+        <Card.Header style={{ background: '#222', color: '#DDD' }}>
+          <h4>
           To Do List Manager ({list.filter(item => !item.complete).length})
-          </h2>
-        </header>
+          </h4>
+        </Card.Header>
 
-        <section className="todo">
+        <Card.Body className="todo">
 
           <div>
             <TodoForm handleSubmit={addItem} />
@@ -61,10 +67,11 @@ function ToDo() {
             <TodoList
               list={list}
               handleComplete={toggleComplete}
-            />
+              />
           </div>
-        </section>
-      </>
+        </Card.Body>
+      </Card>
+              </div>
     );
 
 }
