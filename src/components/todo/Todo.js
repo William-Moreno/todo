@@ -38,6 +38,10 @@ function ToDo() {
     setList(list);
   }, []);
 
+  useEffect(() => {
+    document.title = `${list.filter(item => !item.complete).length} Items To Complete`;
+  }, [list]);
+
 
     return (
       <>
