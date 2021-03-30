@@ -8,7 +8,7 @@ import './todo.scss';
 
 function ToDo() {
 
-    let [list, setList] = useState([]);
+  let [list, setList] = useState([]);
 
   const addItem = (item) => {
     item._id = Math.random();
