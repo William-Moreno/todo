@@ -1,12 +1,13 @@
   
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
 
-function TodoList({ list, handleComplete }) {
+function TodoList({ list, handleComplete, handleDelete }) {
 
 
     return (
-      <ListGroup>
+      <ListGroup style={{ width: '110%' }}>
         {list.map(item => (
           <ListGroup.Item
             variant={item.complete === true ? "success" : "danger"}
@@ -14,8 +15,10 @@ function TodoList({ list, handleComplete }) {
             key={item._id}
           >
             <span onClick={() => handleComplete(item._id)}>
-              {item.text}    ->  <span>{item.assignee}</span>
-            </span>
+              <span>Due {item.due} : </span>  
+               {item.text}    ->  <span>{item.assignee}</span>
+            </span> 
+           <Button style={{ float: 'right', padding: '2px' }} variant="danger" size="sm" onClick={() => handleDelete(item)}>Delete</Button>
           </ListGroup.Item>
         ))}
       </ListGroup>

@@ -28,6 +28,28 @@ function ToDo() {
 
   };
 
+  const removeItem = (item) => {
+
+    let temp = [...list];
+    if(temp.length < 2){
+      return;
+    }
+
+
+    for( let i = temp.length - 1 ; i >= 0 ; i--) {
+      if(item._id === temp[i]._id) {
+        temp.splice(i, 1);
+        if(!temp.length) {
+          setList([]);
+          return;
+        }
+      }
+    }
+    setList(temp);
+
+  };
+  
+
   useEffect(() => {
     let list = [
       { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A'},
@@ -50,7 +72,7 @@ function ToDo() {
       <header>
         <h5 style={{ height: '6vh', padding: '1.5vh', background: '#0292FD', color: 'white' }}>Home</h5>
       </header>
-      <Card style={{ width: '90vw', height: '80vh', boxshadow: '4px 4px 7px #222', margin: 'auto' }}>
+      <Card style={{ width: '90vw', height: '80vh', boxshadow: '4px 4px 7px #222', margin: 'auto', padding: '8px' }}>
         <Card.Header style={{ background: '#222', color: '#DDD' }}>
           <h4>
           To Do List Manager ({list.filter(item => !item.complete).length})
@@ -67,6 +89,7 @@ function ToDo() {
             <TodoList
               list={list}
               handleComplete={toggleComplete}
+              handleDelete={removeItem}
               />
           </div>
         </Card.Body>
