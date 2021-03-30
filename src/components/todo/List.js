@@ -11,14 +11,14 @@ function TodoList({ list, handleComplete, handleDelete }) {
         {list.map(item => (
           <ListGroup.Item
             variant={item.complete === true ? "success" : "danger"}
-            className={`complete-${item.complete.toString()}`}
+            // className={`complete-${item.complete.toString()}`}
             key={item._id}
           >
             <span onClick={() => handleComplete(item._id)}>
               <span>Due {item.due} : </span>  
                {item.text}    ->  <span>{item.assignee}</span>
             </span> 
-           <Button style={{ float: 'right', padding: '2px' }} variant="danger" size="sm" onClick={() => handleDelete(item)}>Delete</Button>
+           <Button style={{ float: 'right', padding: '2px' }} variant="danger" size="sm" onClick={() => handleDelete(item._id)}>Delete</Button>
           </ListGroup.Item>
         ))}
       </ListGroup>

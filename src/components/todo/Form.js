@@ -33,14 +33,6 @@ function TodoForm({ handleSubmit }) {
             />
           </Form.Label>
           <Form.Label>
-            <span>Due Date</span>
-            <Form.Control
-              name="due"
-              placeholder="Due By"
-              onChange={handleInputChange}
-            />
-          </Form.Label>
-          <Form.Label>
             <span>Difficulty Rating</span>
             <Form.Control defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={handleInputChange} />
           </Form.Label>
