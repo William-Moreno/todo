@@ -39,7 +39,7 @@ function ToDo() {
   }, []);
 
   useEffect(() => {
-    document.title = `${list.filter(item => !item.complete).length} Items To Complete`;
+    document.title = `To Do List: ${list.filter(item => !item.complete).length}`;
   }, [list]);
 
 
@@ -47,7 +47,7 @@ function ToDo() {
       <>
         <header>
           <h2>
-          There are {list.filter(item => !item.complete).length} Items To Complete
+          To Do List Manager ({list.filter(item => !item.complete).length})
           </h2>
         </header>
 
