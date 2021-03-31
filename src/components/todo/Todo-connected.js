@@ -13,6 +13,7 @@ const ToDo = () => {
 
   let [list, addItem, toggleComplete, removeItem, getTodoItems] = useAxios();
 
+  // eslint-disable-next-line
   useEffect(getTodoItems, []);
 
   useEffect(() => {
