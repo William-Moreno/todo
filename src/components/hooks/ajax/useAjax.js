@@ -51,10 +51,6 @@ const useAxios = () => {
     for( let i = temp.length - 1 ; i >= 0 ; i--) {
       if(removedItem.data._id === temp[i]._id) {
         temp.splice(i, 1);
-        // if(!temp.length) {
-        //   setList([]);
-        //   return;
-        // }
       }
     }
     setList(temp);
