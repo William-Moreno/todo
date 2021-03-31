@@ -39,4 +39,4 @@ App deployed on Netlify.
 
 UML drawing created with [miro](https://miro.com/)
 
-
+![Hooks API Whiteboard](./assets/hooksapi.PNG)
