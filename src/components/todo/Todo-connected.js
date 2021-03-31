@@ -1,90 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import useAxios from '../hooks/ajax/useAjax.js';
+import Card from 'react-bootstrap/Card';
 import TodoForm from './Form.js';
-import TodoList from './list.js';
+import TodoList from './List.js';
 
 import './todo.scss';
-
-const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 
 
 const ToDo = () => {
 
-  const [list, setList] = useState([]);
 
-  const _addItem = (item) => {
-    item.due = new Date();
-    fetch(todoAPI, {
-      method: 'post',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(item)
-    })
-      .then(response => response.json())
-      .then(savedItem => {
-        setList([...list, savedItem])
-      })
-      .catch(console.error);
-  };
 
-  const _toggleComplete = id => {
+  let [list, addItem, toggleComplete, removeItem, getTodoItems] = useAxios();
 
-    let item = list.filter(i => i._id === id)[0] || {};
+  useEffect(getTodoItems, []);
 
-    if (item._id) {
+  useEffect(() => {
+    document.title = `To Do List: ${list.filter(item => !item.complete).length}`;
+  }, [list]);
 
-      item.complete = !item.complete;
-
-      let url = `${todoAPI}/${id}`;
-
-      fetch(url, {
-        method: 'put',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(item)
-      })
-        .then(response => response.json())
-        .then(savedItem => {
-          setList(list.map(listItem => listItem._id === item._id ? savedItem : listItem));
-        })
-        .catch(console.error);
-    }
-  };
-
-  const _getTodoItems = () => {
-    fetch(todoAPI, {
-      method: 'get',
-      mode: 'cors',
-    })
-      .then(data => data.json())
-      .then(data => setList(data.results))
-      .catch(console.error);
-  };
-
-  useEffect(_getTodoItems, []);
 
   return (
     <>
       <header>
-        <h2>
-          There are {list.filter(item => !item.complete).length} Items To Complete
-        </h2>
+        <h5 style={{ height: '6vh', padding: '1.5vh', background: '#0292FD', color: 'white' }}>Home</h5>
       </header>
+      <Card style={{ width: '90vw', height: '80vh', boxShadow: '4px 4px 7px #222', margin: 'auto', padding: '8px', overflow: 'scroll', position: 'relative' }}>
+        <Card.Header style={{ background: '#222', color: '#DDD', position: 'fixed', zIndex: '2', width: '84vw' }}>
+          <h4>
+          To Do List Manager ({list.filter(item => !item.complete).length})
+          </h4>
+        </Card.Header>
 
-      <section className="todo">
+        <Card.Body className="todo">
 
-        <div>
-          <TodoForm handleSubmit={_addItem} />
-        </div>
+          <div>
+            <TodoForm handleSubmit={addItem} />
+          </div>
 
-        <div>
-          <TodoList
-            list={list}
-            handleComplete={_toggleComplete}
-          />
-        </div>
-      </section>
+          <div>
+            <TodoList
+              list={list}
+              handleComplete={toggleComplete}
+              handleDelete={removeItem}
+              />
+          </div>
+        </Card.Body>
+      </Card>
     </>
   );
 };
