@@ -10,7 +10,7 @@ const useAxios = () => {
 
   const addItem = (item) => {
     item.due = new Date();
-    item.complete = false;
+    // item.complete = false;
     axios.post(todoAPI, item)
       .then(savedItem => {
         setList([...list, savedItem.data]);
@@ -39,7 +39,6 @@ const useAxios = () => {
   const removeItem = id => {
 
     let item = list.filter(i => i._id === id)[0] || {};
-
     if (item._id) {
 
       let url = `${todoAPI}/${id}`;
@@ -52,10 +51,10 @@ const useAxios = () => {
     for( let i = temp.length - 1 ; i >= 0 ; i--) {
       if(removedItem.data._id === temp[i]._id) {
         temp.splice(i, 1);
-        if(!temp.length) {
-          setList([]);
-          return;
-        }
+        // if(!temp.length) {
+        //   setList([]);
+        //   return;
+        // }
       }
     }
     setList(temp);
@@ -70,6 +69,7 @@ const useAxios = () => {
       .then(result => setList(result.data.results))
       .catch(console.error);
   };
+
 
   return [
     list,

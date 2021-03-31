@@ -1,0 +1,32 @@
+.progress-pill {
+  display: block;
+  align-self: center;
+  margin-right: 8px;
+  background-color: green;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 5px 3px 5px;
+  font-size: 0.65rem;
+    &.complete {
+      background-color: red;
+    }
+}
+
+.assigned-person {
+  width: 24vw;
+  font-size: 1rem;
+}
+
+.delete-button {
+  font-size: 0.8rem;
+  border: none;
+  background-color: white;
+  font-weight: bold;
+  color: grey;
+  transition: 350ms;
+}
+
+.delete-button:hover {
+  color: red;
+  transform: scale(1.2);
+}
