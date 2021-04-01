@@ -18,19 +18,39 @@ function TodoList({ list, handleComplete, handleDelete }) {
   let context = useContext(SettingsContext);
 
   console.log(context);
-  let showCompTodos = context.showComp;
-  console.log(showCompTodos);
-
+  
   const handleShowComplete = (e, settings) => {
     e.preventDefault();
     settings.changeShowComp(!settings.showComp);
     displayComplete();
+  }
+  
+  const displayComplete = () => {
+    if(context.showComp === false) {
+      setMovingList(list);
+    } else {
+      setMovingList(movingList.filter(item => !item.complete));
+    }
+    
   }
 
   const handleSort = (e, settings) => {
     e.preventDefault();
     settings.changeSort(e.target.value);
     sortList();
+  }
+
+  const sortList = () => {
+   const sortType = context.sort;
+   let sortedList = movingList.sort((a, b) => {
+      if(a[sortType] > b[sortType]) {
+        return 1;
+      } else if(a[sortType] < b[sortType]) {
+        return -1;
+      } else
+      return 0;
+    });
+    setMovingList(sortedList);
   }
 
   const handleAmount = (e, settings) => {
@@ -50,28 +70,6 @@ function TodoList({ list, handleComplete, handleDelete }) {
     }
   }
 
-  const displayComplete = () => {
-    if(context.showComp === false) {
-      setMovingList(list);
-    } else {
-      setMovingList(movingList.filter(item => !item.complete));
-    }
-    
-  }
-
-  const sortList = () => {
-   const sortType = context.sort;
-   let sortedList = movingList.sort((a, b) => {
-      if(a[sortType] > b[sortType]) {
-        return 1;
-      } else if(a[sortType] < b[sortType]) {
-        return -1;
-      } else
-      return 0;
-    });
-    setMovingList(sortedList);
-  }
-
   const pagination = (list, settings) => {
     if(movingList.length) {
       let nextPage = [];
@@ -86,7 +84,7 @@ function TodoList({ list, handleComplete, handleDelete }) {
 
   useEffect(() => {
     setMovingList(list);
-  }, [movingList]);
+  }, [movingList, list]);
 
 
     return (
