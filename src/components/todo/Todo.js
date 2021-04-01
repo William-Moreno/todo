@@ -97,12 +97,12 @@ function ToDo() {
 
 
     return (
-      <div>
+    <>
       <header>
         <h5 style={{ height: '6vh', padding: '1.5vh', background: '#0292FD', color: 'white' }}>Home</h5>
       </header>
-      <Card style={{ width: '90vw', height: '80vh', boxshadow: '4px 4px 7px #222', margin: 'auto', padding: '8px' }}>
-        <Card.Header style={{ background: '#222', color: '#DDD' }}>
+      <Card style={{ width: '90vw', height: '80vh', boxShadow: '4px 4px 7px #222', margin: 'auto', padding: '8px', overflow: 'scroll', position: 'relative' }}>
+        <Card.Header style={{ background: '#222', color: '#DDD', position: 'fixed', zIndex: '2', width: '84vw' }}>
           <h4>
           To Do List Manager ({list.filter(item => !item.complete).length})
           </h4>
@@ -123,7 +123,7 @@ function ToDo() {
           </div>
         </Card.Body>
       </Card>
-              </div>
+    </>
     );
 
 }
