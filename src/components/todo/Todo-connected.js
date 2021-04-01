@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SettingsProvider from '../../context/Settings.js';
 import useAxios from '../hooks/ajax/useAjax.js';
 import Card from 'react-bootstrap/Card';
@@ -11,9 +11,9 @@ import './todo.scss';
 
 const ToDo = () => {
 
+  let [list, setList] = useState([]);
 
-
-  let [list, addItem, toggleComplete, removeItem, getTodoItems] = useAxios();
+  let [addItem, toggleComplete, removeItem, getTodoItems] = useAxios(list, setList);
 
 
   // eslint-disable-next-line
