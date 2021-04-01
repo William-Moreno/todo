@@ -9,7 +9,6 @@ const useAjax = () => {
 
   useEffect(() => {
     async function ajax() {
-      console.log(options);
       if (!options.url) return;
       let res = await axios(options);
       setResponse(res.data.results);
