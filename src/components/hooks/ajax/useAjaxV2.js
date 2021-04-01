@@ -11,7 +11,7 @@ const useAjax = () => {
     async function ajax() {
       if (!options.url) return;
       let res = await axios(options);
-      setResponse(res.data);
+      setResponse(res.data.results);
     }
     ajax();
   }, [options])

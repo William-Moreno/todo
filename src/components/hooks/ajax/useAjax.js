@@ -4,9 +4,8 @@ import axios from 'axios';
 
 const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 
-const useAxios = () => {
+const useAxios = ({ list, setList }) => {
 
-  let [list, setList] = useState([]);
 
   const addItem = (item) => {
     item.due = new Date();

@@ -1,5 +1,5 @@
-  
-import React from 'react';
+import React, { useContext } from 'react';
+import { SettingsContext } from '../../context/Settings.js';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 
@@ -7,8 +7,10 @@ import './list.scss';
 
 function TodoList({ list, handleComplete, handleDelete }) {
 
+  let context = useContext(SettingsContext);
 
     return (
+      <>
       <ListGroup style={{ width: '110%', marginLeft: '30vw', marginTop: '36px' }}>
         {list.map(item => (
           <Card key={item._id} style={{ width: '24rem', marginBottom: '4px' }}>
@@ -20,7 +22,6 @@ function TodoList({ list, handleComplete, handleDelete }) {
                   X
                 </button>
               </Card.Title>
-              {/* <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle> */}
               <Card.Text style={{ fontSize: '0.75rem' }}>
                 {item.text}
               </Card.Text>
@@ -30,6 +31,7 @@ function TodoList({ list, handleComplete, handleDelete }) {
           </Card>
         ))}
       </ListGroup>
+      </>
     );
 
 }
