@@ -34,3 +34,26 @@
   color: red;
   transform: scale(1.2);
 }
+
+.true {
+  background-color: hotpink;
+}
+
+.false {
+  background-color: lime;
+}
+
+.page-bar {
+  width: 55%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.top-pref {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}

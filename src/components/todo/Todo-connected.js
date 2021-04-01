@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import SettingsProvider from '../../context/Settings.js';
 import useAxios from '../hooks/ajax/useAjax.js';
 import Card from 'react-bootstrap/Card';
-import Preferences from '../preferences/Preferences.js';
 import TodoForm from './Form.js';
 import TodoList from './List.js';
 
@@ -11,9 +10,8 @@ import './todo.scss';
 
 const ToDo = () => {
 
-  let [list, setList] = useState([]);
 
-  let [addItem, toggleComplete, removeItem, getTodoItems] = useAxios(list, setList);
+  let [list, addItem, toggleComplete, removeItem, getTodoItems] = useAxios();
 
 
   // eslint-disable-next-line
@@ -37,22 +35,14 @@ const ToDo = () => {
         </Card.Header>
         <Card.Body className="todo">
           <div>
-          <div>
             <TodoForm handleSubmit={addItem} />
-          </div>
-          <SettingsProvider>
-          <div>
-            <Preferences list={list} />
-          </div>
-          </SettingsProvider>
           </div>
           <div>
           <SettingsProvider>
             <TodoList
               list={list}
               handleComplete={toggleComplete}
-              handleDelete={removeItem}
-              
+              handleDelete={removeItem}              
               />
           </SettingsProvider>
           </div>
