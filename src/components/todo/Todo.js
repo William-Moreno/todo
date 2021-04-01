@@ -1,66 +1,95 @@
 import { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
+import useAjax from '../hooks/ajax/useAjaxV2.js';
+import axios from 'axios';
 
 import TodoForm from './Form.js';
 import TodoList from './List.js';
 
 import './todo.scss';
 
+let todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
+
 function ToDo() {
 
-  let [list, setList] = useState([]);
+  const [url, setUrl] = useState('https://api-js401.herokuapp.com/api/v1/todo');
+  const [method, setMethod] = useState('get');
+  const [list, setList] = useState([]);
+  const [request, response] = useAjax();
+
 
   const addItem = (item) => {
-    item._id = Math.random();
-    item.complete = false;
-    setList([...list, item]);
-  };
+    setMethod('post');
+    item.due = new Date();
+    let options = {
+      url: url,
+      method: method,
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      item: item,
+    };
 
-  const toggleComplete = (id) => {
+    request(options);
 
-    let item = list.filter(i => i._id === id)[0] || {};
-
-    if (item._id) {
-      item.complete = !item.complete;
-      let changeList = list.map(listItem => listItem._id === item._id ? item : listItem);
-      setList(changeList);
-    }
-
-  };
-
-  const removeItem = (item) => {
-
-    let temp = [...list];
-    if(temp.length < 2){
-      return;
-    }
-
-
-    for( let i = temp.length - 1 ; i >= 0 ; i--) {
-      if(item._id === temp[i]._id) {
-        temp.splice(i, 1);
-        if(!temp.length) {
-          setList([]);
-          return;
-        }
-      }
-    }
-    setList(temp);
+    console.log(response);
 
   };
-  
+
+  const toggleComplete = id => {
+
+    // let item = list.filter(i => i._id === id)[0] || {};
+
+    // if (item._id) {
+
+    //   item.complete = !item.complete;
+
+    //   let url = `${todoAPI}/${id}`;
+
+    //   axios.put(url, item)
+    //     .then(savedItem => {
+    //       setList(list.map(listItem => listItem._id === item._id ? savedItem.data : listItem));
+    //     })
+    //     .catch(console.error);
+    // }
+  };
+
+  const removeItem = id => {
+
+  //   let item = list.filter(i => i._id === id)[0] || {};
+  //   if (item._id) {
+
+  //     let url = `${todoAPI}/${id}`;
+
+  //     axios.delete(url, item)
+  //       .then(removedItem => {
+
+  //   let temp = [...list];
+
+  //   for( let i = temp.length - 1 ; i >= 0 ; i--) {
+  //     if(removedItem.data._id === temp[i]._id) {
+  //       temp.splice(i, 1);
+  //     }
+  //   }
+  //   setList(temp);
+
+  // })
+  //       .catch(console.error);
+  //   }
+  };
+
+  const getTodoItems = () => {
+    axios.get(todoAPI)
+      .then(result => setList(result.data.results))
+      .catch(console.error);
+  };
 
   useEffect(() => {
-    let list = [
-      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A'},
-      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A'},
-      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Person B'},
-      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Person C'},
-      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B'},
-    ];
+    request({ url: url, method: 'get' });
+  }, [request]);
 
-    setList(list);
-  }, []);
+  useEffect(() => {
+    setList(response);
+  }, [response]);
 
   useEffect(() => {
     document.title = `To Do List: ${list.filter(item => !item.complete).length}`;

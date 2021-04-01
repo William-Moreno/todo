@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import ToDo from './components/todo/Todo-connected.js';
+import ToDo from './components/todo/Todo.js';
 
 function App() {
 
