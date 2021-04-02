@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useForm = (handleSubmit) => {
+const useForm = (callback) => {
 
   const [item, setItem] = useState({});
 
@@ -11,9 +11,9 @@ const useForm = (handleSubmit) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
-    handleSubmit(item);
-    const newItem = {};
-    setItem(newItem);
+    callback(item);
+    // const newItem = {};
+    // setItem(newItem);
   };
 
   return [

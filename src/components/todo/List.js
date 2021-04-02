@@ -3,6 +3,7 @@ import { SettingsContext } from '../../context/Settings.js';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Pagination from 'react-bootstrap/Pagination';
 
 import './list.scss';
 
@@ -86,6 +87,26 @@ function TodoList({ list, handleComplete, handleDelete }) {
     setMovingList(list);
   }, [movingList, list]);
 
+  const handlePageSwitch = (e) => {
+    console.log(e);
+  }
+
+let active = page;
+let pageTabs = [];
+for (let number = 1; number <= (list.length/context.cardAmount); number++) {
+  pageTabs.push(
+    <Pagination.Item key={number} value={pageTabs} onClick={(e) => handlePageSwitch(e)} active={number === active}>
+      {number}
+    </Pagination.Item>,
+  );
+}
+
+const paginationBasic = (
+  <div>
+    <Pagination size="sm" >{pageTabs}</Pagination>
+  </div>
+);
+
 
     return (
       <>
@@ -96,6 +117,9 @@ function TodoList({ list, handleComplete, handleDelete }) {
               <div className="top-pref">
                 <label>Display Completed: 
               <Button style={{ marginLeft: '8px' }} size="sm" onClick={((e) => handleShowComplete(e, settings))}>{settings.showComp.toString()}</Button>
+                </label>
+                <label style={{ marginLeft: '4px' }}>
+                Sort By:
                 </label>
                 <select onChange={((e) => handleSort(e, settings))}>
                   <option value="difficulty">Sort By</option>
@@ -137,6 +161,7 @@ function TodoList({ list, handleComplete, handleDelete }) {
           <Button size="sm" onClick={switchPage}>Next</Button> 
         </div>
       </ListGroup>
+        {paginationBasic}
       </>
     );
 
