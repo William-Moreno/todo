@@ -10,7 +10,7 @@ const useAjax = () => {
     async function ajax() {
       const res = options.url && await axios(options);
       if(res) {
-        setResponse(res.data.results);
+        setResponse(res.data);
       }
     }
     ajax();

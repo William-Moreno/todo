@@ -12,8 +12,8 @@ const useForm = (callback) => {
     e.preventDefault();
     e.target.reset();
     callback(item);
-    // const newItem = {};
-    // setItem(newItem);
+    const newItem = {};
+    setItem(newItem);
   };
 
   return [

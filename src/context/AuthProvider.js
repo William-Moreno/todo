@@ -13,6 +13,14 @@ function AuthProvider(props) {
   let [token, setToken] = useState('');
   let [request, response] = useAjax();
 
+  
+  useEffect(() => {
+    let token = cookie.load('auth');
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+  
   useEffect(() => {
     console.log(response);
     if (_isValidUser(response.token)) {
@@ -20,14 +28,8 @@ function AuthProvider(props) {
       setToken(response.token);
       cookie.save('auth', response.token);
     }
+  // eslint-disable-next-line 
   }, [response]);
-
-  useEffect(() => {
-    let token = cookie.load('auth');
-    if (token) {
-      setToken(token);
-    }
-  }, []);
 
   const _isValidUser = (token) => {
     const validUser = jwt.decode(token);
@@ -38,8 +40,8 @@ function AuthProvider(props) {
     }
   }
 
+
   const login = (username, password) => {
-    // basic authentication header options
     let options = {
       url: `${API_URL}/signin`,
       method: 'POST',

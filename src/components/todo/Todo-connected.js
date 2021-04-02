@@ -5,6 +5,7 @@ import Login from '../auth/Login.js';
 import Auth from '../auth/Auth.js';
 import useAjax from '../hooks/ajax/useAjax.js';
 import Card from 'react-bootstrap/Card';
+import Navbar from 'react-bootstrap/Navbar';
 import TodoForm from './Form.js';
 import TodoList from './List.js';
 
@@ -22,14 +23,25 @@ const ToDo = () => {
 
   // eslint-disable-next-line
   useEffect(() => {
-    response.results && setList(response.results);
+    if(response.results){
+      response.results && setList(response.results);
+    } else {
+      getItems();
+    }
+    // eslint-disable-next-line
   }, [response]);
 
   useEffect(() => {
     document.title = `To Do List: ${list.filter(item => !item.complete).length}`;
   }, [list]);
 
-  const _addItem = (item) => {
+  useEffect(() => {
+    request({ url: todoAPI, method: 'get' });
+  }, [request]);
+
+  const addItem = (item) => {
+    item.due = new Date();
+
     let options = {
       url: todoAPI,
       method: 'post',
@@ -40,10 +52,13 @@ const ToDo = () => {
     request(options);
   };
 
-  const _toggleComplete = id => {
+  const toggleComplete = id => {
     const item = list.filter(i => i._id === id)[0] || {};
 
     if(item._id) {
+
+      item.complete = !item.complete;
+
       const url = `${todoAPI}/${id}`;
       const options = {
         url: url,
@@ -56,7 +71,7 @@ const ToDo = () => {
     }
   };
 
-  const _deleteItem = id => {
+  const deleteItem = id => {
     const url = `${todoAPI}/${id}`;
     const options = {
       url: url,
@@ -67,7 +82,7 @@ const ToDo = () => {
     request(options);
   };
 
-  const _getItems = () => {
+  const getItems = () => {
     const options = {
       url: todoAPI,
       method: 'get',
@@ -78,17 +93,22 @@ const ToDo = () => {
   };
 
   useEffect(() => {
-    _getItems();
+    getItems();
+    // eslint-disable-next-line
   }, []);
 
 
   return (
     <>
       <AuthProvider>
-      <header>
-        <h5 style={{ height: '6vh', padding: '1.5vh', background: '#0292FD', color: 'white' }}>Home</h5>
-      </header>
-        <Login />
+        <header>
+          <Navbar style={{ color: 'white', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} bg='primary' variant='dark' className='headerOne'>
+            <h4>Home</h4>
+            <div>
+              <Login />
+            </div>
+          </Navbar>
+        </header>
         <Auth capability="read">
       <Card style={{ width: '90vw', height: '80vh', boxShadow: '4px 4px 7px #222', margin: 'auto', padding: '8px', overflow: 'scroll', position: 'relative' }}>
         <Card.Header style={{ background: '#222', color: '#DDD', position: 'fixed', zIndex: '2', width: '84vw' }}>
@@ -98,14 +118,14 @@ const ToDo = () => {
         </Card.Header>
         <Card.Body className="todo">
           <div>
-            <TodoForm handleSubmit={_addItem} />
+            <TodoForm handleSubmit={addItem} />
           </div>
           <div>
           <SettingsProvider>
             <TodoList
               list={list}
-              handleComplete={_toggleComplete}
-              handleDelete={_deleteItem}              
+              handleComplete={toggleComplete}
+              handleDelete={deleteItem}              
               />
           </SettingsProvider>
           </div>

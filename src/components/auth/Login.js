@@ -6,7 +6,7 @@ import { If } from '../if/If.js';
 function Login() {
 
   let context = useContext(AuthContext);
-  let [values, handleInputChange, handleFormSubmit] = useForm(handleLogin);
+  let [handleInputChange, handleFormSubmit] = useForm(handleLogin);
 
   function handleLogin(userDetails) {
     context.login(userDetails.username, userDetails.password);
@@ -16,8 +16,8 @@ function Login() {
     <>
       <If condition={!context.token}>
         <form onSubmit={handleFormSubmit}>
-          <input name="username" onChange={handleInputChange} />
-          <input name="password" onChange={handleInputChange} />
+          <input name="username" placeholder="Username" onChange={handleInputChange} />
+          <input name="password" placeholder="Password" onChange={handleInputChange} />
           <button type="submit">Login</button>
         </form>
       </If>
