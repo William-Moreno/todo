@@ -9,6 +9,9 @@ To Do List Manager Phase 2: Connecting the To Do Application to an external API 
 ### Lab 33
 To Do List Manager Phase 3: Add some configuration settings to the application
 
+### Lab 34
+To Do List Manager Phase 4: Adding security and access controls to the application.
+
 ## Overview
 
 ### Lab 31
@@ -20,11 +23,15 @@ In Phase 2, we’re going to connect the To Do Manager to a deployed API, backed
 ### Lab 33
 In this phase, we’ll be adding some top-level settings for the application, so that the user can make some display choices that the app will use by default.
 
+### Lab 34
+In this final phase, we’ll be requiring that users be logged in, in order to see the to do items. Additionally, based on their user type, they will be allowed (or denied) to perform actions such as editing or deleting them.
+
 ## Author: William Moreno
 
 ## Collaborators
 
 - James Gerstenberger
+- Jason Quaglia
 
 ## Getting Started
 

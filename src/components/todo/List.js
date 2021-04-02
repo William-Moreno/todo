@@ -11,80 +11,100 @@ function TodoList({ list, handleComplete, handleDelete }) {
   // console.log(list);
 
   let [page, setPage] = useState(1);
-  let [movingList, setMovingList] = useState(list);
-
-  console.log(movingList);
+  let [sortList, setSortList] = useState(list);
+  let [pagedList, setPagedList] = useState(sortList);
 
   let context = useContext(SettingsContext);
 
-  console.log(context);
   
   const handleShowComplete = (e, settings) => {
     e.preventDefault();
-    settings.changeShowComp(!settings.showComp);
+    context.changeShowComp(!context.showComp);
     displayComplete();
   }
+
   
   const displayComplete = () => {
     if(context.showComp === false) {
-      setMovingList(list);
+      setPagedList(sortList);
     } else {
-      setMovingList(movingList.filter(item => !item.complete));
+      setPagedList(sortList.filter(item => !item.complete));
     }
     
   }
-
+  
   const handleSort = (e, settings) => {
     e.preventDefault();
-    settings.changeSort(e.target.value);
-    sortList();
+    setSortList(list);
+    context.changeSort(e.target.value);
+    sortTheList();
   }
 
-  const sortList = () => {
-   const sortType = context.sort;
-   let sortedList = movingList.sort((a, b) => {
-      if(a[sortType] > b[sortType]) {
+  useEffect(() => {
+    console.log(context.sort)
+    sortTheList();
+    // eslint-disable-next-line
+  }, [context.sort]);
+  
+  const sortTheList = () => {
+   let sortedList = sortList.sort((a, b) => {
+      if(a[context.sort] > b[context.sort]) {
         return 1;
-      } else if(a[sortType] < b[sortType]) {
+      } else if(a[context.sort] < b[context.sort]) {
         return -1;
       } else
       return 0;
     });
-    setMovingList(sortedList);
+    setPagedList(sortedList);
   }
 
   const handleAmount = (e, settings) => {
     e.preventDefault();
-    settings.changeCardAmount(e.target.value)
-
+    context.changeCardAmount(e.target.value)
     pagination();
   }
+
+  useEffect(() => {
+    pagination();
+    // eslint-disable-next-line
+  }, [context.cardAmount]);
 
   const switchPage = (e) => {
     if(e.target.innerText === 'Previous') {
       if(page > 1) {
         setPage(page - 1);
       }
-    } else {
+    } else if(page < (list.length/context.cardAmount)){
       setPage(page + 1);
     }
   }
 
-  const pagination = (list, settings) => {
-    if(movingList.length) {
+  const pagination = () => {
+    if(sortList[0]) {
       let nextPage = [];
       let low = (context.cardAmount * (page - 1));
       let high = (context.cardAmount * page);
       for(let i = low ; i < high ; i++) {
-        nextPage.push(movingList[i]);
+        nextPage.push(sortList[i]);
       }
-      setMovingList(nextPage);
+      setPagedList(nextPage);
     }
   }
 
-  useEffect(() => {
-    setMovingList(list);
-  }, [movingList, list]);
+  // useEffect(() => {
+  //   setSortList(list);
+  //   setPagedList(list);
+  // }, [list, page]);
+
+  // useEffect(() => {
+  //   pagination();
+  // }, []);
+
+
+
+  // useEffect(() => {
+  //   pagination();
+  // }, []);
 
 
     return (
@@ -96,6 +116,9 @@ function TodoList({ list, handleComplete, handleDelete }) {
               <div className="top-pref">
                 <label>Display Completed: 
               <Button style={{ marginLeft: '8px' }} size="sm" onClick={((e) => handleShowComplete(e, settings))}>{settings.showComp.toString()}</Button>
+                </label>
+                <label style={{ marginLeft: '4px' }}>
+                Sort By:
                 </label>
                 <select onChange={((e) => handleSort(e, settings))}>
                   <option value="difficulty">Sort By</option>
@@ -111,7 +134,7 @@ function TodoList({ list, handleComplete, handleDelete }) {
           )}
         </SettingsContext.Consumer>
       <ListGroup style={{ width: '110%', marginLeft: '30vw', marginTop: '36px' }}>
-        {list.map(item => (
+        {pagedList.map(item => (
           <Card key={item._id}  style={{ width: '24rem', marginBottom: '4px' }} >
             <Card.Body>
               <Card.Title style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid lightgrey', height: '2.5vh' }}>
@@ -137,6 +160,7 @@ function TodoList({ list, handleComplete, handleDelete }) {
           <Button size="sm" onClick={switchPage}>Next</Button> 
         </div>
       </ListGroup>
+        {/* {paginationBasic} */}
       </>
     );
 
