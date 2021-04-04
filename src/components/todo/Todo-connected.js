@@ -110,7 +110,7 @@ const ToDo = () => {
           </Navbar>
         </header>
         <Auth capability="read">
-      <Card style={{ width: '90vw', height: '80vh', boxShadow: '4px 4px 7px #222', margin: 'auto', padding: '8px', overflow: 'scroll', position: 'relative' }}>
+      <Card style={{ width: '90vw', height: '80vh', boxShadow: '4px 4px 7px #222', margin: 'auto', padding: '8px', position: 'relative' }}>
         <Card.Header style={{ background: '#222', color: '#DDD', position: 'fixed', zIndex: '2', width: '84vw' }}>
           <h4>
           To Do List Manager ({list.filter(item => !item.complete).length})

@@ -20,7 +20,9 @@ function Auth({ capability, children }) {
         {children}
       </If>
       <If condition={!isAuthorized(capability)}>
-        <h4>Not Authorized</h4>
+        <div style={{ width: '200px', height: '35vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <p>Not Authorized</p>
+        </div>
       </If>
     </>
   )

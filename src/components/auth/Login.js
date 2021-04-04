@@ -23,7 +23,7 @@ function Login() {
         </form>
       </If>
       <If condition={context.token}>
-        <button onClick={context.logout}>
+        <button onClick={context.logout} style={{ backgroundColor: 'red', color: 'white'}}>
           Logout
         </button>
       </If>

@@ -8,21 +8,19 @@ import './list.scss';
 
 function TodoList({ list, handleComplete, handleDelete }) {
 
-  // console.log(list);
+  console.log('into list', list);
 
   let [page, setPage] = useState(1);
   let [sortList, setSortList] = useState(list);
   let [pagedList, setPagedList] = useState(sortList);
 
   let context = useContext(SettingsContext);
-
   
   const handleShowComplete = (e, settings) => {
     e.preventDefault();
     context.changeShowComp(!context.showComp);
     displayComplete();
   }
-
   
   const displayComplete = () => {
     if(context.showComp === false) {
@@ -47,7 +45,7 @@ function TodoList({ list, handleComplete, handleDelete }) {
   }, [context.sort]);
   
   const sortTheList = () => {
-   let sortedList = sortList.sort((a, b) => {
+    let sortedList = sortList.sort((a, b) => {
       if(a[context.sort] > b[context.sort]) {
         return 1;
       } else if(a[context.sort] < b[context.sort]) {
@@ -55,7 +53,7 @@ function TodoList({ list, handleComplete, handleDelete }) {
       } else
       return 0;
     });
-    setPagedList(sortedList);
+    setSortList(sortedList);
   }
 
   const handleAmount = (e, settings) => {
@@ -80,7 +78,7 @@ function TodoList({ list, handleComplete, handleDelete }) {
   }
 
   const pagination = () => {
-    if(sortList[0]) {
+    if(sortList.length) {
       let nextPage = [];
       let low = (context.cardAmount * (page - 1));
       let high = (context.cardAmount * page);
@@ -105,7 +103,6 @@ function TodoList({ list, handleComplete, handleDelete }) {
   // useEffect(() => {
   //   pagination();
   // }, []);
-
 
     return (
       <>

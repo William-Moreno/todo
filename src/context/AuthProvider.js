@@ -22,7 +22,6 @@ function AuthProvider(props) {
   }, []);
   
   useEffect(() => {
-    console.log(response);
     if (_isValidUser(response.token)) {
       setUser(response.user);
       setToken(response.token);

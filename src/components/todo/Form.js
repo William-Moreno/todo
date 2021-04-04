@@ -1,4 +1,6 @@
 import useForm from '../hooks/form/useForm.js';
+import AuthProvider from '../../context/AuthProvider.js';
+import Auth from '../auth/Auth.js';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -11,6 +13,8 @@ function TodoForm({ handleSubmit }) {
 
     return (
       <>
+      <AuthProvider>
+        <Auth capability="create">
         <Form onSubmit={handleFormSubmit} style={{ border: '1px solid #787878', width: '28vw', maxwidth: '400px', padding: '12px', margin: '36px 18px auto -24px', position: 'fixed' }}>
         <h5>Add To Do Item</h5>
           <Form.Label>
@@ -31,6 +35,8 @@ function TodoForm({ handleSubmit }) {
           </Form.Label>
           <Button style={{ width: '10vw', padding: '3px' }} type="submit">Add Item</Button>
         </Form>
+        </Auth>
+      </AuthProvider>
       </>
     );
 
